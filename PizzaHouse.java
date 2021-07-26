@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class PizzaHouse {
@@ -5,54 +7,45 @@ public class PizzaHouse {
     
     public String address = "";
     public String phone = "";
-    public int item = 0;
-    public int topping = "";
-    List bevSidedishList = new ArrayList();
+    public int item = 10;  //10 means pizza is not ordered at all. default val.
+    public int topping = 0;
+    List<Integer> bevSidedishList = new ArrayList<Integer>();
    
     public int bevSidedishSumPrice =0;
     public int totalPrice =0;
-    //price info
-     HashMap<Integer,Integer> bevSidedishPrice=new HashMap<Integer,Integer>();//Creating HashMap
-       bevSidedishPrice.put(1,1); // 1 $1  
-       bevSidedishPrice.put(2,2);  // 2 $2  
-       bevSidedishPrice.put(3,1); // 3 $1  
-       bevSidedishPrice.put(4,5); // 4 $5 
-       bevSidedishPrice.put(5,0); // 5 $0
-       
-      HashMap<Integer,Integer> itemPrice=new HashMap<Integer,Integer>();//Creating HashMap
-       itemPrice.put(1,1); // 1 $10  
-       itemPrice.put(2,2);  // 2 $12  
-       itemPrice.put(3,1); // 3 $12  
-       itemPrice.put(4,5); // 4 $15 
-    
-    HashMap<Integer,Integer> toppingPrice=new HashMap<Integer,Integer>();//Creating HashMap
-       toppingPrice.put(1,2); // 1 $2  
-       toppingPrice.put(2,5);  // 2 $5  
-       toppingPrice.put(3,4); // 3 $4 
-       toppingPrice.put(4,3); // 4 $3 
-       toppingPrice.put(5,0); // 4 $0 
 
-      Scanner sc = new Scanner(System.in);
+    //price info array
+    int itemPrice[] = new int[] {10,12,12,15};
+    int toppingPrice[] = new int[] {2,5,4,3,0};
+    int bevSidedishPrice[] = new int[] {1,1,1,5,0};
+ 
+    //menu info array
+    String itemName[] = new String[] {"cheese pizza","bacon pizza","supreme pizza","shrimp pizza"};
+    String toppingName[] = new String[] {"cheddar cheese","beef barbeque","fork barbeque","grilled chicken","none"};
+    String bevSidedishName[] = new String[] {"coke","sprite","orange juice","fried potato with meat sauce","none"};
+  
     
     //constructor
-    public MyClass(){
-          System.out.println("Welcome to Pizza House");
-          System.out.println("Enter the address to receive your pizza : ");
-          this.address = sc.nextLine();
-          
-          System.out.println("Enter your phone number : "); 
-          this.phone = sc.nextLine();
+    public PizzaHouse(){  
+    	 System.err.println("◆◇◆◇◆◇◆◇Welcome to Pizza House◆◇◆◇◆◇◆◇");
+         System.out.println("Choose 1. order a pizza");
+         System.out.println("Choose 2. check the bill");
     }
-        
-   
-    
+  
     public void orderPizza(){
+        System.out.println("Enter the address to receive your pizza : ");
+        Scanner sc = new Scanner(System.in);
+        this.address = sc.nextLine();
+        
+        System.out.println("Enter your phone number : "); 
+        this.phone = sc.nextLine();
           System.out.println("step1: choose one item number");
           System.out.println("1. cheese pizza ($10)");
           System.out.println("2. bacon pizza ($12)");
           System.out.println("3. supreme pizza ($12)");
           System.out.println("4. shrimp pizza ($15)");
-          this.item = sc.nextInt();
+          Scanner sc1 = new Scanner(System.in);
+          this.item = sc1.nextInt()-1;
           
           System.out.println("step2: choose one extra topping number");
           System.out.println("1. cheddar cheese ($2)");
@@ -60,9 +53,10 @@ public class PizzaHouse {
           System.out.println("3. fork barbeque ($4)");
           System.out.println("4. grilled chicken ($3)");
           System.out.println("5. none");
-          this.topping = sc.nextInt();
+          this.topping = sc1.nextInt()-1;
           
-          while(true){
+          boolean continued = true;
+          while(continued){   
           System.out.println("step3: choose beverage or side dish");
           System.out.println("1. coke ($1)");
           System.out.println("2. sprite ($1)");
@@ -70,52 +64,63 @@ public class PizzaHouse {
           System.out.println("4. fried potato with meat sauce ($5)");
           System.out.println("5. none");
       
-          bevSidedishList.add(sc.nextInt()); 
+          bevSidedishList.add(sc.nextInt()-1); 
           
           System.out.println("Do you want to order more beverage or side dish? Yes/No");
-          
-          if(sc.nextLine() == "No"){
-              break;
+          Scanner sc2 = new Scanner(System.in);
+          String answer = sc2.nextLine();
+          if(answer.equals("Yes")){
+        	  //System.out.println("y");
+              continued = true;
+             }else {
+              //System.out.println("n");
+              continued = false; 	 
              }
-         
           }
+    }
     
-    public void checkBill(){
-            System.out.println("-------check your bill -----");
+    public void checkBill(){ 
+    	//System.out.println(item);
+    	if(item == 10) {
+    		System.out.println("------------your order list is empty -------------");	
+    	}else {
+            System.err.println("ㅁㅁㅁㅁㅁㅁㅁㅁyour billㅁㅁㅁㅁㅁㅁㅁㅁ");
             System.out.println("------------your info -------------");
             System.out.println("1. address: "+address);
             System.out.println("2. phone: "+phone);
-            System.out.println("------------you ordered.. -----------");
-            System.out.println("1. item: "+item+" "+itemPrice.get(this.item)+"$");
-            System.out.println("2. topping: "+topping+" "+toppingPrice.get(this.topping)+"$");
-            System.out.print("3. beverage or side dish: ");
+            System.out.println("------------you ordered-----------");
+            System.out.println("1. item: "+itemName[item]+" "+itemPrice[item]+"$");
+            System.out.println("2. topping: "+toppingName[topping]+" "+toppingPrice[topping]+"$");
+            System.out.println("3. beverage or side dish: ");
 
-        // Print the name from the list get its price from hashmap
-        for(int i =0; i<bevSidedishList.length(); i++) {
-            System.out.println(", "+list[i]+" "+bevSidedishPrice.get(list[i])+"$");
-            bevSidedishSumPrice=bevSidedishSumPrice+bevSidedishPrice.get(list[i]);
+        
+        for(int i =0; i<bevSidedishList.size(); i++) {
+            System.out.println("   "+bevSidedishName[i]+" "+bevSidedishPrice[i]+"$");
+            bevSidedishSumPrice=bevSidedishSumPrice+bevSidedishPrice[i];
         }
         
-            totalPrice = itemPrice.get(this.item)+toppingPrice.get(this.topping)+bevSidedishSumPrice;
-         System.out.println("------------total amount -----------");
+            totalPrice = itemPrice[item]+toppingPrice[item]+bevSidedishSumPrice;
+          System.out.println("------------total amount -----------");
           System.out.println(totalPrice+"$");
-    }
-    public static void main(String args[]) {
-        
+          System.err.println("ㅁㅁㅁㅁㅁㅁㅁㅁThank you for your order!!ㅁㅁㅁㅁㅁㅁㅁㅁ");
 
-      System.out.println("Choose 1. order a pizza");
-      System.out.println("Choose 2. check the bill");
-      
-      
-      int num = sc1.nextInt();
+    	}
+    }
+    
+    public static void main(String args[]) {
+     
+
       
       PizzaHouse pizzaHouse= new PizzaHouse(){};
-
+      Scanner sc1 = new Scanner(System.in); 
+      int num = sc1.nextInt();
+      //System.out.println("num1"+num);
       switch(num){
           case 1: pizzaHouse.orderPizza();
-              break;
+          //System.out.println("num2"+num);
           case 2: pizzaHouse.checkBill();
               break;
       }
+      
     }
 }
