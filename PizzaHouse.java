@@ -108,9 +108,7 @@ public class PizzaHouse {
     }
     
     public static void main(String args[]) {
-     
 
-      
       PizzaHouse pizzaHouse= new PizzaHouse(){};
       Scanner sc1 = new Scanner(System.in); 
       int num = sc1.nextInt();
