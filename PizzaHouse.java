@@ -30,6 +30,8 @@ public class PizzaHouse {
     	 System.err.println("◆◇◆◇◆◇◆◇Welcome to Pizza House◆◇◆◇◆◇◆◇");
          System.out.println("Choose 1. order a pizza");
          System.out.println("Choose 2. check the bill");
+         System.out.println("Choose 3. exit");
+         System.out.println("Enter the menu number");
     }
   
     public void orderPizza(){
@@ -107,6 +109,10 @@ public class PizzaHouse {
     	}
     }
     
+    public void exit(){ 
+    	System.out.println("Thank you for visiting Pizza House. Have a good day");
+    	System.exit(0); 
+    }
     public static void main(String args[]) {
 
       PizzaHouse pizzaHouse= new PizzaHouse(){};
@@ -118,6 +124,8 @@ public class PizzaHouse {
           //System.out.println("num2"+num);
           case 2: pizzaHouse.checkBill();
               break;
+          case 3: pizzaHouse.exit();
+          	  break;
       }
       
     }
