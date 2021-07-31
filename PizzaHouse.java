@@ -111,7 +111,6 @@ public class PizzaHouse {
     
     public void exit(){ 
     	System.out.println("Thank you for visiting Pizza House. Have a good day");
-    	System.exit(0); 
     }
     public static void main(String args[]) {
 
